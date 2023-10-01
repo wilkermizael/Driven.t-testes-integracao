@@ -57,6 +57,9 @@ export function handleApplicationErrors(
   if (err.name === 'InvalidCEPError') {
     return res.status(httpStatus.BAD_REQUEST).send(err.message);
   }
+  if (err.name === 'NotPaid') {
+    return res.status(httpStatus.PAYMENT_REQUIRED).send(err.message);
+  }
 
   if (err.hasOwnProperty('status') && err.name === 'RequestError') {
     return res.status((err as RequestError).status).send({

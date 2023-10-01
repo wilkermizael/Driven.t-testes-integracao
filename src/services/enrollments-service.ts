@@ -1,6 +1,6 @@
 import { Address, Enrollment } from '@prisma/client';
 import { request } from '@/utils/request';
-import { enrollmentNotFoundError, invalidCepError } from '@/errors';
+import { enrollmentNotFoundError, invalidCepError, notFoundError } from '@/errors';
 import { addressRepository, CreateAddressParams, enrollmentRepository, CreateEnrollmentParams } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
 import { AddressEnrollment } from '@/protocols';
@@ -27,7 +27,8 @@ async function getAddressFromCEP(cep: string): Promise<AddressEnrollment> {
 async function getOneWithAddressByUserId(userId: number): Promise<GetOneWithAddressByUserIdResult> {
   const enrollmentWithAddress = await enrollmentRepository.findWithAddressByUserId(userId);
 
-  if (!enrollmentWithAddress) throw enrollmentNotFoundError();
+  //if (!enrollmentWithAddress) throw enrollmentNotFoundError();
+  if (!enrollmentWithAddress) throw notFoundError();
 
   const [firstAddress] = enrollmentWithAddress.Address;
   const address = getFirstAddress(firstAddress);

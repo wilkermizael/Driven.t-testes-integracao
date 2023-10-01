@@ -8,7 +8,6 @@ export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Respon
   const { userId } = req;
 
   const enrollmentWithAddress = await enrollmentsService.getOneWithAddressByUserId(userId);
-
   return res.status(httpStatus.OK).send(enrollmentWithAddress);
 }
 
@@ -17,7 +16,6 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
     ...req.body,
     userId: req.userId,
   });
-
   return res.sendStatus(httpStatus.OK);
 }
 
