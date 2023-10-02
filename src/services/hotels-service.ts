@@ -5,12 +5,16 @@ import { notFoundError, notPaid } from '@/errors';
 async function ticketPaid(userId: number) {
   const getEnrollment = await hotelsRepository.findWithEnrollmentPaid(userId);
   const getTicket = await hotelsRepository.findTicket();
-  const getHotel = await hotelsRepository.findHotel();
   console.log(getTicket);
-  if (!getEnrollment || !getTicket || !getHotel) throw notFoundError();
-  console.log('aqui');
-  if (getTicket.status === 'RESERVED') throw notPaid();
-  console.log(getTicket.status);
+  const getHotel = await hotelsRepository.findHotel();
+  if (!getEnrollment || !getTicket || !getHotel) throw notFoundError(); //SE NÃO EXISTIR INSCRIÇÃO, TICKET E HOTEL
+  if (
+    getTicket.status === 'RESERVED' ||
+    getTicket.TicketType.isRemote === true ||
+    getTicket.TicketType.includesHotel === false
+  )
+    throw notPaid(); // SE O TICKET NÃO TIVER SIDO PAGO
+
   return true;
 }
 async function getHotels() {

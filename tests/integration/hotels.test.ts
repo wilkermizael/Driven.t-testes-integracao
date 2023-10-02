@@ -58,41 +58,25 @@ describe('GET /hotels', () => {
     expect(status).toBe(httpStatus.PAYMENT_REQUIRED);
   });
 
-  /*it('should respond with status 200 and with ticket data', async () => {
+  it('should respond with status 200 and with ticket data', async () => {
     const user = await createUser();
     const token = await generateValidToken(user);
     const enrollment = await createEnrollmentWithAddress(user);
     const ticketType = await createTicketType();
     const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
     expect(ticket.enrollmentId).toBe(enrollment.id); //Existe um enrollment
-    const response = await server.get('/tickets').set('Authorization', `Bearer ${token}`);
-    expect(response.status).toEqual(httpStatus.OK);
-
-    expect(response.body).toMatchObject({
-      status: 'PAID',
-      TicketType: {
-        includesHotel: true,
-      },
-    });
-  });*/
-});
-
-//console.log(enrollment);
-//expect(enrollment).toHaveLength(1);
-/*expect(response.body).toEqual({
-      id: expect.any(Number),
-      status: 'PAID',
-      ticketTypeId: expect.any(Number),
-      enrollmentId: expect.any(Number),
-      TicketType: {
+    const hotel = await createHotel();
+    const { body, status } = await server.get('/hotels').set('Authorization', `Bearer ${token}`);
+    expect(status).toEqual(httpStatus.OK);
+    console.log(hotel);
+    expect(body).toEqual(
+      expect.objectContaining({
         id: expect.any(Number),
         name: expect.any(String),
-        price: expect.any(Number),
-        isRemote: expect.any(Boolean),
-        includesHotel: true,
+        image: expect.any(String),
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
-      },
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String),
-    });*/
+      }),
+    );
+  });
+});
