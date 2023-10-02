@@ -1,5 +1,5 @@
 import { TicketStatus } from '@prisma/client';
-import { invalidDataError, notFoundError } from '@/errors';
+import { invalidDataError, notFoundError, notPaid } from '@/errors';
 import { CreateTicketParams } from '@/protocols';
 import { enrollmentRepository, ticketsRepository } from '@/repositories';
 

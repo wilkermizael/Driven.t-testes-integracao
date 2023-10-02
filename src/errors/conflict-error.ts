@@ -6,10 +6,3 @@ export function conflictError(message: string): ApplicationError {
     message,
   };
 }
-
-export function notPaid(message: string): ApplicationError {
-  return {
-    name: 'NotPaid',
-    message,
-  };
-}

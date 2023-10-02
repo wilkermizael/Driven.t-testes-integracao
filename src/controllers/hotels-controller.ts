@@ -6,5 +6,8 @@ import { hotelsService } from '@/services/hotels-service';
 export async function getHotels(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
   const condittionShowHotels = await hotelsService.ticketPaid(userId);
-  res.status(httpStatus.OK).send(condittionShowHotels);
+  if (condittionShowHotels === true) {
+    const getHotels = await hotelsService.getHotels();
+    res.status(httpStatus.OK).send(getHotels);
+  }
 }

@@ -8,13 +8,8 @@ async function findWithEnrollmentPaid(userId: number) {
     },
   });
 }
-async function findTicket(userId: number) {
-  return prisma.ticket.findFirst({
-    where: { enrollmentId: userId },
-    include: {
-      TicketType: true,
-    },
-  });
+async function findTicket() {
+  return prisma.ticket.findFirst();
 }
 async function findHotel() {
   return prisma.hotel.findFirst();
